@@ -9,3 +9,5 @@ A starter pckage to do commutative algebra with Julia. Specifically, this packag
 - Common algorithms, such as lcm, gdc
 - Gröbner bases and supporting algorithms
 - Characteristic sets and Wu-Ritt elimination (and variations) for equation solving
+
+

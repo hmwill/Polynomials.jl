@@ -1,3 +1,7 @@
+# Polynomial
+#
+# Groebner bases and supporting functions
+#
 # The Polynomial package is licensed under the MIT Expat License:
 #
 # Copyright (c) 2013: Hans-Martin Will.
@@ -21,10 +25,12 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-module Polynomial
+abstract GrobenerBasis
 
-include("Polynomials.jl")
-include("Groebner.jl")
-include("WuRitt.jl")
+# given a collection of polynomials in a ring, which are associated with a
+# specific term order, build the corresponding Groebner basis
 
-end # module
+# Buchberger's algorithm
+
+# Reduction of a polynomial modulo a Groebner basis
+

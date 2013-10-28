@@ -1,3 +1,7 @@
+# Polynomial
+#
+# Unit test wrapper
+#
 # The Polynomial package is licensed under the MIT Expat License:
 #
 # Copyright (c) 2013: Hans-Martin Will.
@@ -21,10 +25,4 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-module Polynomial
-
-include("Polynomials.jl")
-include("Groebner.jl")
-include("WuRitt.jl")
-
-end # module
+@test(true)

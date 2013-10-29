@@ -1,4 +1,8 @@
-# The Polynomial package is licensed under the MIT Expat License:
+# Polynomials
+#
+# Representation of polynomials rings, polynomials, and supporting functions
+#
+# The Polynomials package is licensed under the MIT Expat License:
 #
 # Copyright (c) 2013: Hans-Martin Will.
 #
@@ -21,10 +25,57 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-module Polynomial
+# A polynomial ring, which is obtained by adjoining a set of variables (symbols)
+# to a given base ring
+type PolynomialRing{C <: Number}
 
-include("Polynomials.jl")
-include("Groebner.jl")
-include("WuRitt.jl")
+    variables::Array{Symbol}
+    idxmap::Dict{Symbol, Int}
+    
+    function PolynomialRing(variables::Array{Symbol})
+        idxmap = [ variables[i] => i for i = 1:length(variables) ]
+        
+        if length(idxmap) != length(variables)
+            throw (ArgumentError())
+        end
+        
+        new(copy(variables), idxmap)
+    end
+end
 
-end # module
+PolynomialRing{C <: Number}(::Type{C}, variables::Array{Symbol}) = PolynomialRing{C}(variables)
+
+function showcompact{C <: Number}(io::IO, rg::PolynomialRing{C})
+    showcompact(io, C)
+    variables = rg.variables
+    
+    if length(variables) > 0
+        print(io, "[", variables[1])
+        for index = 2:length(variables)
+            print(",", variables[index])
+        end
+        print(io, "]")
+    end
+end
+
+function show(io::IO, rg::PolynomialRing)
+    showcompact(io, typeof(rg))
+    variables = rg.variables
+
+    if length(variables) > 0
+        print(io, "[", variables[1])
+        for index = 2:length(variables)
+            print(",", variables[index])
+        end
+        print(io, "]")
+    end
+end
+
+# A term within a given polynomial ring
+abstract Term{Coeff}
+
+# A term order 
+abstract TermOrder
+
+# An ordered series of terms arranged based on a given term-order
+abstract Polynomial{Coeff}

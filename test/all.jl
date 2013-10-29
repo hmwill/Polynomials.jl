@@ -1,4 +1,4 @@
-# Polynomial
+# Polynomials
 #
 # Unit test wrapper
 #

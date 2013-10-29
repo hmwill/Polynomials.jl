@@ -1,4 +1,4 @@
-# Polynomial
+# Polynomials
 #
 # Groebner bases and supporting functions
 #

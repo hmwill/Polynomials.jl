@@ -1,4 +1,4 @@
-The Polynomial.jl package is licensed under the MIT Expat License:
+The Polynomials.jl package is licensed under the MIT Expat License:
 
 > Copyright (c) 2013: Hans-Martin Will.
 >

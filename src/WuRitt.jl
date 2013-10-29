@@ -1,8 +1,8 @@
-# Polynomial
+# Polynomials
 #
 # Charactersitics sets, Wu-Ritt elimination, and supporting functions
 #
-# The Polynomial package is licensed under the MIT Expat License:
+# The Polynomials package is licensed under the MIT Expat License:
 #
 # Copyright (c) 2013: Hans-Martin Will.
 #

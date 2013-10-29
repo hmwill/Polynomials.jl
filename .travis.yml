@@ -10,4 +10,4 @@ before_install:
   - sudo apt-get install libpcre3-dev julia -y
 script:
   - julia -e 'Pkg.init(); run(`ln -s $(pwd()) $(Pkg.dir())/Polynomials`); Pkg.resolve()'
-  - julia -e 'using Polynomials; @assert isdefined(:Polynomials); @assert typeof(Polynomials) === Module'
+  - julia -e 'include(string(Pkg.dir(), "/Polynomials/test/all.jl"))'

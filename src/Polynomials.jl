@@ -27,7 +27,7 @@
 
 # A polynomial ring, which is obtained by adjoining a set of variables (symbols)
 # to a given base ring
-abstract PolynomialRing{C <: Number}
+type PolynomialRing{C <: Number}
 
     variables::Array{Symbol}
     idxmap::Dict{Symbol, Int}

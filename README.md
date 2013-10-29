@@ -1,6 +1,6 @@
 # Polynomials
 
-[![Build Status](https://travis-ci.org/hmwill/Polynomial.jl.png)](https://travis-ci.org/hmwill/Polynomial.jl)
+[![Build Status](https://travis-ci.org/hmwill/Polynomials.jl.png)](https://travis-ci.org/hmwill/Polynomials.jl)
 
 A starter pckage to do commutative algebra with Julia. Specifically, this package conatins the following:
 

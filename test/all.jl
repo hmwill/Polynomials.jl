@@ -25,4 +25,13 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-@test(true)
+using Polynomials; 
+
+@assert isdefined(:Polynomials); 
+@assert typeof(Polynomials) === Module
+
+@assert isdefined(:Polynomial); 
+@assert typeof(Polynomial) === DataType
+
+@assert isdefined(:PolynomialRing); 
+@assert typeof(PolynomialRing) === DataType

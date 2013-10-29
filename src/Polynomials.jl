@@ -23,8 +23,11 @@
 
 module Polynomials
 
-include("Polynomial.jl")
-include("Groebner.jl")
-include("WuRitt.jl")
+    export PolynomialRing
+    export Polynomial
+
+    include("Polynomial.jl")
+    include("Groebner.jl")
+    include("WuRitt.jl")
 
 end # module

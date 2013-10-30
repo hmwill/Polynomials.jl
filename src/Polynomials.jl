@@ -25,6 +25,8 @@ module Polynomials
 
     export PolynomialRing
     export Polynomial
+    
+    export inject
 
     include("Polynomial.jl")
     include("Groebner.jl")

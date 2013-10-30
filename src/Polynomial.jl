@@ -45,6 +45,8 @@ end
 
 PolynomialRing{C <: Number}(::Type{C}, variables::Array{Symbol}) = PolynomialRing{C}(variables)
 
+# Extend the predefined function
+import Base.showcompact
 function showcompact{C <: Number}(io::IO, rg::PolynomialRing{C})
     showcompact(io, C)
     variables = rg.variables
@@ -58,6 +60,8 @@ function showcompact{C <: Number}(io::IO, rg::PolynomialRing{C})
     end
 end
 
+# Extend the predefined function
+import Base.show
 function show(io::IO, rg::PolynomialRing)
     showcompact(io, typeof(rg))
     variables = rg.variables
@@ -72,10 +76,35 @@ function show(io::IO, rg::PolynomialRing)
 end
 
 # A term within a given polynomial ring
-abstract Term{Coeff}
+immutable Term{Coeff}
+    coeff::Coeff
+    exp::Array{Int}
+end
 
 # A term order 
 abstract TermOrder
 
 # An ordered series of terms arranged based on a given term-order
-abstract Polynomial{Coeff}
+type Polynomial{Coeff}
+    ring::PolynomialRing{Coeff}
+    terms::Array{Term{Coeff}}
+    #order::TermOrder
+end
+
+function inject{C <: Number}(rg::PolynomialRing{C}, val::C)
+    if val == zero(C)
+        Polynomial{C}(rg, Array(Term{C}, 0))
+    else
+        Polynomial{C}(rg, [Term{C}(val, fill(0, length(rg.variables)))])
+    end
+end
+
+function inject{C <: Number}(rg::PolynomialRing{C}, var::Symbol)
+    index = rg.idxmap[var]
+    exp = fill(0, length(rg.variables))
+    exp[index] = 1
+    Polynomial{C}(rg, [Term{C}(one(C), exp)])
+end
+
+colon{C <: Number}(val, rg::PolynomialRing{C}) = inject(rg, convert(C, val))
+colon{C <: Number}(var::Symbol, rg::PolynomialRing{C}) = inject(rg, var)

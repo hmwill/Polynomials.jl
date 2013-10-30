@@ -35,3 +35,32 @@ using Polynomials;
 
 @assert isdefined(:PolynomialRing); 
 @assert typeof(PolynomialRing) === DataType
+
+rg = PolynomialRing{BigInt}([:x, :y, :z])
+
+poly = 1:rg
+@assert length(poly.terms) == 1
+@assert poly.terms[1].coeff == one(BigInt)
+@assert sum(poly.terms[1].exp) == 0
+
+poly = 0:rg
+@assert length(poly.terms) == 0
+
+poly = :x:rg
+@assert length(poly.terms) == 1
+@assert poly.terms[1].coeff == one(BigInt)
+@assert poly.terms[1].exp[rg.idxmap[:x]] == 1
+@assert sum(poly.terms[1].exp) == 1
+
+poly = :y:rg
+@assert length(poly.terms) == 1
+@assert poly.terms[1].coeff == one(BigInt)
+@assert poly.terms[1].exp[rg.idxmap[:y]] == 1
+@assert sum(poly.terms[1].exp) == 1
+
+poly = :z:rg
+@assert length(poly.terms) == 1
+@assert poly.terms[1].coeff == one(BigInt)
+@assert poly.terms[1].exp[rg.idxmap[:z]] == 1
+@assert sum(poly.terms[1].exp) == 1
+

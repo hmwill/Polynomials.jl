@@ -36,7 +36,7 @@ using Polynomials;
 @assert isdefined(:PolynomialRing); 
 @assert typeof(PolynomialRing) === DataType
 
-rg = PolynomialRing{BigInt}([:x, :y, :z])
+rg = PolynomialRing(BigInt, [:x, :y, :z])
 
 # Test simple embeddings
 
@@ -93,4 +93,25 @@ poly = -(:z:rg)
 @assert poly.terms[1].coeff == -one(BigInt)
 @assert poly.terms[1].exp[rg.idxmap[:z]] == 1
 @assert sum(poly.terms[1].exp) == 1
+
+# Test addition and subtraction
+
+O = 0:rg
+I = 1:rg
+X = :x:rg
+Y = :y:rg
+
+# TODO
+X+Y+I+Y+X+O+I+X
+
+# Test multiplication
+
+# TODO
+X*I
+X*Y
+X*7*Y
+X*7*Y+987
+8765X+I
+
+@assert true
 

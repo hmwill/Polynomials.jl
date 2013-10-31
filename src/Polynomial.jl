@@ -81,11 +81,18 @@ immutable Term{Coeff}
     exp::Array{Int}
 end
 
+-{C <: Number}(term::Term{C}) = Term{C}(-term.coeff, term.exp)
+
 # A term order 
 abstract TermOrder
+abstract Lexicographic <: TermOrder
+abstract GradedLexicographic <: TermOrder
+abstract GradedReverseLexicographic <: TermOrder
+
+#compare_terms(order::Callable, left::Array{Int}, right::Array{int}) = order(left, right)
 
 # An ordered series of terms arranged based on a given term-order
-type Polynomial{Coeff}
+immutable Polynomial{Coeff}
     ring::PolynomialRing{Coeff}
     terms::Array{Term{Coeff}}
     #order::TermOrder
@@ -108,3 +115,11 @@ end
 
 colon{C <: Number}(val, rg::PolynomialRing{C}) = inject(rg, convert(C, val))
 colon{C <: Number}(var::Symbol, rg::PolynomialRing{C}) = inject(rg, var)
+
+-{C <: Number}(poly::Polynomial{C}) = 
+    length(poly.terms) > 0 ? 
+        Polynomial(poly.ring, map(t::Term{C} -> -t, poly.terms)::Array{Term{C}}) :
+        Polynomial(poly.ring, Array(Term{C}, 0))
+
+=={C <: Number}(left::Polynomial{C}, right::Polynomial{C}) = left.ring == right.ring && left.terms == right.terms
+!={C <: Number}(left::Polynomial{C}, right::Polynomial{C}) = left.ring != right.ring || left.terms != right.terms    

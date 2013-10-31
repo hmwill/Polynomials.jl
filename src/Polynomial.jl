@@ -91,7 +91,10 @@ immutable Term{Coeff}
     exp::Array{Int}
 end
 
-termorder(left::Term, right::Term, ::Type{Lexicographic}) = cmp(left.exp, right.exp)
+# TODO: Temporary fix until fully sync'ed with Julia nightly builds
+lexcmp(x,y) = cmp(x,y)
+
+termorder(left::Term, right::Term, ::Type{Lexicographic}) = lexcmp(left.exp, right.exp)
 
 function termorder(left::Term, right::Term, ::Type{GradedLexicographic})
     @assert false #TODO

@@ -119,7 +119,37 @@ end
 immutable Polynomial{C <: Number, O <: TermOrder}
     ring::PolynomialRing{C}
     terms::Array{Term{C}}
-    #order::TermOrder
+end
+
+function showcompact{C <: Number, O <: TermOrder}(io::IO, poly::Polynomial{C, O})
+	if length(poly.terms) == 0
+		print(io, zero(C))
+	else
+		for index = 1:length(poly.terms)
+			term = poly.terms[index]
+			if term.coeff >= zero(C) && index != 1
+				print(io, "+")
+			end
+			if term.coeff != one(C)
+				print(io, term.coeff)
+			end
+			for vindex = 1:length(term.exp)
+				if term.exp[vindex] != 0
+					print(io, poly.ring.variables[vindex])
+					
+					if term.exp[vindex] > 1
+						print(io, "^", term.exp[vindex])
+					end
+				end
+			end
+		end
+	end
+end
+
+function show(io::IO, poly::Polynomial)
+	showcompact(io, poly)
+	print(io, "::")
+	showcompact(io, poly.ring)
 end
 
 function inject{C <: Number, O <: TermOrder}(rg::PolynomialRing{C, O}, val::C)

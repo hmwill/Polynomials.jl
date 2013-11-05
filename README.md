@@ -52,7 +52,7 @@ denotes the `x` variable, and
 	julia> :y:rg
 
 denotes the `y` variable. If we are working with a single ring, a more convenient notation
-can be accomplished by directly importing the symbols of the ring into the current namespace.
+can be done by directly importing the symbols of the ring into the current namespace.
 This can be accomplished using
 
 	julia> setvars(rg) |> eval
@@ -64,4 +64,5 @@ of the polynomial ring. It is then possible to simply write
 
 	julia> 2x+5y+4
 
-to specify a specific polynomial that is an element of the ring `rg`.
+to specify a specific polynomial that is an element of the ring `rg`. Observe that the coefficient values `2`, `4` and `4` have been implicitly converted to the coefficient type
+of the ring `rg`, which is `BigInt`.

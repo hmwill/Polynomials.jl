@@ -52,6 +52,17 @@ end
 PolynomialRing{C <: Number}(::Type{C}, variables::Array{Symbol}) = PolynomialRing{C, Lexicographic}(variables)
 PolynomialRing{C <: Number, O <: TermOrder}(::Type{C}, variables::Array{Symbol}, ::Type{O}) = PolynomialRing{C, O}(variables)
 
+export setvars
+function setvars(rg::PolynomialRing)
+	args = Array(Any, length(rg.variables))
+	for i = 1:length(rg.variables)
+		v = rg.variables[i]
+		sym = v:rg
+		args[i] = :(($v) = $sym)
+	end
+	Expr(:block, args...)
+end
+
 # Extend the predefined function
 import Base.showcompact
 function showcompact{C <: Number, O <: TermOrder}(io::IO, rg::PolynomialRing{C, O})

@@ -94,15 +94,17 @@ poly = -(:z:rg)
 @assert poly.terms[1].exp[rg.idxmap[:z]] == 1
 @assert sum(poly.terms[1].exp) == 1
 
-# Test addition and subtraction
+# Test addition, subtraction, multiplication and exponentiation
 
 setvars(rg) |> eval
 
 io = IOBuffer()
 showcompact(io, (x-y+1)^5)
-@assert takebuf_string(io) == "x^5-5x^4*y+5x^4+10x^3*y^2-20x^3*y+10x^3-10x^2*y^3+30x^2*y^2-30x^2*y+10x^2+5x*y^4-20x*y^3+30x*y^2-20x*y+5x-1*y^5+5*y^4-10*y^3+10*y^2-5*y+1"
+@assert takebuf_string(io) == "x^5-5x^4*y+5x^4+10x^3*y^2-20x^3*y+10x^3-10x^2*y^3+30x^2*y^2-30x^2*y+10x^2+5x*y^4-20x*y^3+30x*y^2-20x*y+5x-1y^5+5y^4-10y^3+10y^2-5y+1"
 
 io = IOBuffer()
 showcompact(io, (x-x*y^3+1)^5)
 @assert takebuf_string(io) == "x^5*y^15+5x^5*y^12+10x^5*y^9+10x^5*y^6+5x^5*y^3+x^5+5x^4*y^12+20x^4*y^9+30x^4*y^6+20x^4*y^3+5x^4+10x^3*y^9+30x^3*y^6+30x^3*y^3+10x^3+10x^2*y^6+20x^2*y^3+10x^2+5x*y^3+5x+1"
+
+@assert (x+1)^6 == (x+1)^5*(x+1)
 

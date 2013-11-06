@@ -115,6 +115,11 @@ end
 -{C <: Number}(term::Term{C}) = Term{C}(-term.coeff, term.exp)
 *{C <: Number}(left::Term{C}, right::Term{C}) = Term{C}(left.coeff * right.coeff, left.exp + right.exp)
 
+=={C <: Number}(left::Term{C}, right::Term{C}) =
+	left.coeff == right.coeff && left.exp == right.exp
+
+!={C <: Number}(left::Term{C}, right::Term{C}) = !(left == right)
+	 
 # An ordered series of terms arranged based on a given term-order
 immutable Polynomial{C <: Number, O <: TermOrder}
     ring::PolynomialRing{C}
@@ -134,11 +139,11 @@ function showcompact{C <: Number, O <: TermOrder}(io::IO, poly::Polynomial{C, O}
 			if term.coeff != one(C) || term.exp == zeroexp
 				print(io, term.coeff)
 			end
+			separator = ""
 			for vindex = 1:length(term.exp)
 				if term.exp[vindex] != 0
-					if vindex != 1
-						print(io, "*")
-					end
+					print(io, separator)
+					separator = "*"
 					print(io, poly.ring.variables[vindex])
 					
 					if term.exp[vindex] > 1

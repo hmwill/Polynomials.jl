@@ -72,7 +72,7 @@ function showcompact{C <: Number, O <: TermOrder}(io::IO, rg::PolynomialRing{C, 
     if length(variables) > 0
         print(io, "[", variables[1])
         for index = 2:length(variables)
-            print(",", variables[index])
+            print(io,",", variables[index])
         end
         print(io, "]")
     end
@@ -125,16 +125,20 @@ function showcompact{C <: Number, O <: TermOrder}(io::IO, poly::Polynomial{C, O}
 	if length(poly.terms) == 0
 		print(io, zero(C))
 	else
+		zeroexp = zeros(Int, length(poly.ring.variables))
 		for index = 1:length(poly.terms)
 			term = poly.terms[index]
 			if term.coeff >= zero(C) && index != 1
 				print(io, "+")
 			end
-			if term.coeff != one(C)
+			if term.coeff != one(C) || term.exp == zeroexp
 				print(io, term.coeff)
 			end
 			for vindex = 1:length(term.exp)
 				if term.exp[vindex] != 0
+					if vindex != 1
+						print(io, "*")
+					end
 					print(io, poly.ring.variables[vindex])
 					
 					if term.exp[vindex] > 1
@@ -289,3 +293,30 @@ end
 
 *{C <: Number, O <: TermOrder}(left::Polynomial{C, O}, right::Number) = left * inject(left.ring, convert(C, right))
 *{C <: Number, O <: TermOrder}(left::Number, right::Polynomial{C, O}) = inject(right.ring, convert(C, left)) * right
+
+function ^{C <: Number, O <: TermOrder}(poly::Polynomial{C, O}, exponent::Integer)
+	if exponent < 0
+		throw (ArgumentError())
+	elseif exponent == 0
+        return Polynomial{C, O}(rg, Array(Term{C}, 0))
+	elseif length(poly.terms) == 0
+		return poly
+	elseif length(poly.terms) == 1
+		term = Term{C}(poly.terms[1].coeff, poly.terms[1].exp * exponent)
+		return Polynomial{C, O}(poly.ring, [term])
+	else
+		result = 1:poly.ring
+		factor = poly
+		
+		while exponent != 0
+			if exponent & 1 != 0
+				result = result * factor
+			end
+			
+			factor = factor * factor
+			exponent = exponent >>> 1
+		end
+		
+		return result
+	end
+end

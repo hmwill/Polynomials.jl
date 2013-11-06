@@ -96,22 +96,13 @@ poly = -(:z:rg)
 
 # Test addition and subtraction
 
-O = 0:rg
-I = 1:rg
-X = :x:rg
-Y = :y:rg
+setvars(rg) |> eval
 
-# TODO
-X+Y+I+Y+X+O+I+X
+io = IOBuffer()
+showcompact(io, (x-y+1)^5)
+@assert takebuf_string(io) == "x^5-5x^4*y+5x^4+10x^3*y^2-20x^3*y+10x^3-10x^2*y^3+30x^2*y^2-30x^2*y+10x^2+5x*y^4-20x*y^3+30x*y^2-20x*y+5x-1*y^5+5*y^4-10*y^3+10*y^2-5*y+1"
 
-# Test multiplication
-
-# TODO
-X*I
-X*Y
-X*7*Y
-X*7*Y+987
-8765X+I
-
-@assert true
+io = IOBuffer()
+showcompact(io, (x-x*y^3+1)^5)
+@assert takebuf_string(io) == "x^5*y^15+5x^5*y^12+10x^5*y^9+10x^5*y^6+5x^5*y^3+x^5+5x^4*y^12+20x^4*y^9+30x^4*y^6+20x^4*y^3+5x^4+10x^3*y^9+30x^3*y^6+30x^3*y^3+10x^3+10x^2*y^6+20x^2*y^3+10x^2+5x*y^3+5x+1"
 

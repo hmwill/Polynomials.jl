@@ -23,6 +23,9 @@
 
 module Polynomials
 
+	require("DataStructures")
+	using DataStructures
+	
     export PolynomialRing
     export Polynomial
     

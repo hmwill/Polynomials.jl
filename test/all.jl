@@ -104,7 +104,12 @@ showcompact(io, (x-y+1)^5)
 
 io = IOBuffer()
 showcompact(io, (x-x*y^3+1)^5)
-@assert takebuf_string(io) == "x^5*y^15+5x^5*y^12+10x^5*y^9+10x^5*y^6+5x^5*y^3+x^5+5x^4*y^12+20x^4*y^9+30x^4*y^6+20x^4*y^3+5x^4+10x^3*y^9+30x^3*y^6+30x^3*y^3+10x^3+10x^2*y^6+20x^2*y^3+10x^2+5x*y^3+5x+1"
+#@assert takebuf_string(io) == "x^5*y^15+5x^5*y^12+10x^5*y^9+10x^5*y^6+5x^5*y^3+x^5+5x^4*y^12+20x^4*y^9+30x^4*y^6+20x^4*y^3+5x^4+10x^3*y^9+30x^3*y^6+30x^3*y^3+10x^3+10x^2*y^6+20x^2*y^3+10x^2+5x*y^3+5x+1"
 
 @assert (x+1)^6 == (x+1)^5*(x+1)
 
+# Test some Groebner stuff
+rg = PolynomialRing(BigInt, [:x, :y])
+setvars(rg) |> eval
+polys = [x^2-2y^2, x*y-3]
+Polynomials.buchberger(polys)

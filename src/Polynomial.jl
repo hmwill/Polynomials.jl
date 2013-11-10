@@ -225,7 +225,8 @@ function plusminus_{C <: Number, O <: TermOrder}(left::Polynomial{C, O}, right::
             idxs += 1
             idxl += 1
         else
-            result[idxs] = termr
+	        term = termsr[idxr]
+	        result[idxs] = Term{C}(op(zero(C), term.coeff), term.exp)
             idxs += 1
             idxr += 1
         end
